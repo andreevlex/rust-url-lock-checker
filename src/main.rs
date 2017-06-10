@@ -27,7 +27,6 @@ fn main() {
                     if args.len() != 3 {
                             panic!("Использование: url-lock-checker check DOMAIN_NAME");
                     } 
-                    //urllockchecker::check_url(&args[2])
                     check_url(&args[2])
                 },
                 "help" => {
