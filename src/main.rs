@@ -1,10 +1,10 @@
 extern crate curl;
 
 mod urllockchecker;
+use urllockchecker::UrlLockChecker;
 
 fn check_url( s: &str ) {
-	let mut checker = urllockchecker::UrlLockChecker::new();
-	checker.set_url(s);
+	let checker = UrlLockChecker::new(s);
 	if checker.is_lock() {
 		println!("yes");
 	}
@@ -26,7 +26,7 @@ fn main() {
                 "check" => {
                     if args.len() != 3 {
                             panic!("Использование: url-lock-checker check DOMAIN_NAME");
-                    } 
+                    }
                     check_url(&args[2])
                 },
                 "help" => {

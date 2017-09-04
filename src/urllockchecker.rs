@@ -9,17 +9,13 @@ pub struct UrlLockChecker {
 }
 
 impl UrlLockChecker {
-	pub fn new() -> UrlLockChecker {
+	pub fn new(c_url: &str) -> UrlLockChecker {
 		UrlLockChecker {
 			base_url: "http://api.antizapret.info".to_string(),
-			control_url: "".to_string()
+			control_url: String::from_str(c_url).unwrap()
 		}
 	}
-	
-	pub fn set_url(&mut self, url: &str) {
-		self.control_url = String::from_str(url).unwrap();
-	}
-	
+		
 	pub fn is_lock(&self) -> bool {
 		
 		let mut str_data: String = String::new();
