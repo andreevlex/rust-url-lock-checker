@@ -1,7 +1,9 @@
 extern crate curl;
+extern crate clap;
 
 mod urllockchecker;
 use urllockchecker::UrlLockChecker;
+use clap::{Arg, App};
 
 fn check_url( s: &str ) {
 	let checker = UrlLockChecker::new(s);
@@ -14,30 +16,21 @@ fn check_url( s: &str ) {
 }
 
 fn main() {
-	const HELP: &'static str = "Использование: url-lock-checker команда [аргументы]...
-    Команды:
-        -c, --check <DOMAIN_NAME> 
-            проверить сайт. Параметр DOMAIN_NAME - содержит доменное имя или ip адрес
-        -h, --help
-            показать это сообщение.";
-    
-	let args: Vec<String> = std::env::args().collect();
-    match args.get(1) {
-        Some(text) => {
-            match text.as_ref() {
-                "-c" | "--check" => {
-                    if args.len() != 3 {
-                            panic!("Использование: url-lock-checker --check DOMAIN_NAME");
-                    }
-                    check_url(&args[2])
-                },
-                "-h" | "--help" => {
-                    println!("{}", HELP);
-                },
-                command @ _  => panic!(
-                    format!("Неправильная команда: {}", command))
-            }
-        }
-        None => println!("{}", HELP),
+	let app_m = App::new("rust-url-lock-checker")
+        .version("0.3.0")
+        .author("Andreev Alexander")
+        .about("Консольная программа для проверки сайта на наличие в запрещенном списке через API сайта https://antizapret.info/")
+        .arg(Arg::with_name("check")
+                .short("c")
+                .long("check")
+                .help("проверить сайт по доменному имени или ip адресу")
+                .takes_value(true)
+                .value_name("DOMAIN_NAME"))
+        .get_matches();
+    if let Some(url) = app_m.value_of("check") {
+        check_url(&url);
+    }
+    else {
+        println!("{}", "Используйте ключ -h для получения справки");
     }
 }
