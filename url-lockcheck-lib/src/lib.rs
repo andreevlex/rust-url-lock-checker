@@ -1,3 +1,4 @@
+extern crate curl;
 
 use curl::easy::Easy;
 use std::str;

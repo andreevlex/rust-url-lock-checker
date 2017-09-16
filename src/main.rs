@@ -1,9 +1,8 @@
-extern crate curl;
 #[macro_use]
 extern crate clap;
+extern crate urllockcheck;
 
-mod urllockchecker;
-use urllockchecker::UrlLockChecker;
+use urllockcheck::UrlLockChecker;
 use clap::{Arg, App};
 
 fn check_url( s: &str ) {
@@ -17,7 +16,7 @@ fn check_url( s: &str ) {
 }
 
 fn main() {
-	let app_m = App::new("rust-url-lock-checker")
+	let app_m = App::new("url-lock-checker")
         .version(crate_version!())
         .author(crate_authors!())
         .about("Консольная программа для проверки сайта на наличие в запрещенном списке через API сайта https://antizapret.info/")
