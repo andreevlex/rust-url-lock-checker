@@ -1,7 +1,12 @@
 [package]
 name = "urllockcheck"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["Andreev Alexander <andreevlex.as@gmail.com>"]
 
 [dependencies]
-curl = "0.4.6"
+chrono = { version = "0.4", features = ["serde"] }
+serde = "1.0"
+serde_json = "1.0"
+serde_derive = "1.0"
+serde_urlencoded = "0.5"
+reqwest = "0.7.3"

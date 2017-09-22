@@ -7,12 +7,10 @@ use clap::{Arg, App};
 
 fn check_url( s: &str ) {
 	let checker = UrlLockChecker::new(s);
-	if checker.is_lock() {
-		println!("yes");
-	}
-	else {
-		println!("no");
-	}
+	match checker.is_lock() {
+		Ok(result) => println!("{}", result),
+        Err(e) => println!("Error: {:?}", e),
+    }
 }
 
 fn main() {
