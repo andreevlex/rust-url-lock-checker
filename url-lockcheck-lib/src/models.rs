@@ -6,9 +6,11 @@ pub struct Register {
     
     pub rsoc_id: String,
     
-    pub includeTime: String,
-    
-    pub rsocDate: String,
+    #[serde(rename = "includeTime")]
+    pub include_time: String,
+
+    #[serde(rename = "rsocData")]
+    pub rsoc_date: String,
     
     pub org: String,
     
@@ -29,7 +31,8 @@ pub struct Register {
 #[derive(Deserialize, Debug, Clone)]
 pub struct DetailInfo {
     
-    pub updateTime: String,
+    #[serde(rename = "updateTime")]
+    pub update_time: String,
     
     pub source: String,
     

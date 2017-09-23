@@ -3,7 +3,7 @@ name = "url-lock-checker"
 version = "0.1.0"
 dependencies = [
  "clap 2.26.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "urllockcheck 0.3.2",
+ "urllockcheck 0.4.0",
 ]
 
 [[package]]
@@ -762,7 +762,7 @@ dependencies = [
 
 [[package]]
 name = "urllockcheck"
-version = "0.3.2"
+version = "0.4.0"
 dependencies = [
  "chrono 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "reqwest 0.7.3 (registry+https://github.com/rust-lang/crates.io-index)",

@@ -1,8 +1,7 @@
 use std::io::Read;
-use reqwest::{Client, IntoUrl, StatusCode};
-use reqwest::header::{Headers, Accept, ContentType};
+use reqwest::{Client, IntoUrl};
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize};
 
 use std::str;
 use std::str::FromStr;
@@ -24,10 +23,10 @@ pub enum ApiError {
 }
 
 enum TypeResponse {
-    small,
-    csv,
-    json,
-    xml,
+    Small,
+    Csv,
+    Json,
+    Xml,
 }
 
 type ApiResult<T> = Result<T, ApiError>;
@@ -53,10 +52,10 @@ impl UrlLockChecker {
 		request_str.push_str("&type=");
 
         let type_resp = match tp {
-            TypeResponse::small => "small",
-            TypeResponse::csv => "csv",
-            TypeResponse::xml => "xml",
-            TypeResponse::json => "json",
+            TypeResponse::Small => "small",
+            TypeResponse::Csv => "csv",
+            TypeResponse::Xml => "xml",
+            TypeResponse::Json => "json",
         };
 
         request_str.push_str(type_resp);
@@ -66,12 +65,14 @@ impl UrlLockChecker {
 
 	pub fn is_lock(&self) -> ApiResult<bool> {
 						
-		let mut request_str: String = self.build_url(TypeResponse::small);
+		let request_str: String = self.build_url(TypeResponse::Small);
 				
 		match self.client.get(&request_str).unwrap().send() {
 			Ok(mut resp) => {
 				let mut content: String = String::new();		
-				resp.read_to_string(&mut content);
+				if let Err(e) = resp.read_to_string(&mut content) {
+					return Err(ApiError::BadResponse(e.to_string()));
+				};
 
 				match content.as_ref() {
 					"piff-paff" => Err(ApiError::BadRequest(format!("Bad request {}", request_str))),
@@ -85,7 +86,7 @@ impl UrlLockChecker {
 	}
 
 	pub fn get_details(&self) -> ApiResult<DetailInfo> {
-        let full_url = self.build_url(TypeResponse::json);
+        let full_url = self.build_url(TypeResponse::Json);
         self.get_json(&full_url)
 	}
 
