@@ -9,7 +9,7 @@ pub struct Register {
     #[serde(rename = "includeTime")]
     pub include_time: String,
 
-    #[serde(rename = "rsocData")]
+    #[serde(rename = "rsocDate")]
     pub rsoc_date: String,
     
     pub org: String,
