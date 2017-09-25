@@ -90,6 +90,26 @@ impl UrlLockChecker {
         self.get_json(&full_url)
 	}
 
+	pub fn get_ip_addresses(&self) -> ApiResult<Vec<String>> {
+		let mut result: Vec<String> = Vec::new();
+		
+		match self.get_details() {
+			Ok(details) => {
+				if let Some(regs) = details.register {
+				
+					for reg in regs.iter() {
+						let v: Vec<&str> = reg.ip.split(',').collect();
+						for el in v.iter() {
+							result.push(el.to_string());
+						}
+					}
+				}
+				Ok(result)
+			},
+			Err(e) => Err(e),
+		}		
+	}
+
     /// Returns raw data in bytes from specified url
     fn get_json<S, T>(&self, url: S) -> ApiResult<T>
         where S: IntoUrl,
