@@ -1,3 +1,5 @@
+use chrono::prelude::*;
+use chrono::ParseResult;
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct Register {
@@ -38,4 +40,10 @@ pub struct DetailInfo {
     
     pub register: Option<Vec<Register>>,
 
+}
+
+impl DetailInfo {
+     pub fn get_update_time(&self) -> ParseResult<DateTime<Utc>> {
+         Utc.datetime_from_str(&self.update_time, "%Y-%m-%d %H:%M:%S")
+     }
 }
