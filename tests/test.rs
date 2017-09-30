@@ -24,12 +24,3 @@ fn test_register_len() {
         None => panic!("register empty"),
         }
 }
-
-#[test]
-fn test_update_time() {
-	let check = UrlLockChecker::new("rutracker.org");
-	match check.get_details() {
-           Ok(dt) => assert_eq!(dt.get_update_time().unwrap().format("%Y-%m-%d %H:%M:%S").to_string(), dt.update_time),
-           Err(e) => panic!("{:?}", e),
-           }
-}

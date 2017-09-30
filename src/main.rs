@@ -25,6 +25,14 @@ fn print_block_ip( s: &str ) {
     }
 }
 
+fn print_update_date( s: &str ) {
+	let checker = UrlLockChecker::new(s);
+	match checker.get_update_date() {
+		Ok(result) => println!("{}", result.to_string()),
+        Err(e) => println!("Error: {:?}", e),
+    }
+}
+
 fn main() {
 	let app_m = App::new("url-lock-checker")
         .version(crate_version!())
@@ -42,12 +50,21 @@ fn main() {
                 .help("получить список заблокированных ip адресов по доменному имени")
                 .takes_value(true)
                 .value_name("DOMAIN_NAME"))
+        .arg(Arg::with_name("update-date")
+                .short("d")
+                .long("update-date")
+                .help("показать дату обновления данных по доменному имени")
+                .takes_value(true)
+                .value_name("DOMAIN_NAME"))
         .get_matches();
     if let Some(url) = app_m.value_of("check") {
         check_url(&url);
     }
     else if let Some(url) = app_m.value_of("print_ip") {
         print_block_ip(&url);
+    }
+    else if let Some(url) = app_m.value_of("update-date") {
+        print_update_date(&url);
     }
     else {
         println!("{}", "Используйте ключ -h для получения справки");

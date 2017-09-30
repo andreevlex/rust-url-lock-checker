@@ -6,6 +6,8 @@ use serde::{Deserialize};
 use std::str;
 use std::str::FromStr;
 
+use chrono::{DateTime, Utc};
+
 use models::*;
 
 pub struct UrlLockChecker {
@@ -106,6 +108,14 @@ impl UrlLockChecker {
 				}
 				Ok(result)
 			},
+			Err(e) => Err(e),
+		}		
+	}
+
+	pub fn get_update_date(&self) -> ApiResult<DateTime<Utc>> {
+		
+		match self.get_details() {
+			Ok(details) => Ok(details.update_time),
 			Err(e) => Err(e),
 		}		
 	}
