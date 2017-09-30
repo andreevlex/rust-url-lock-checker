@@ -1,6 +1,6 @@
 [package]
 name = "urllockcheck"
-version = "0.4.0"
+version = "0.1.0"
 authors = ["Andreev Alexander <andreevlex.as@gmail.com>"]
 
 [dependencies]

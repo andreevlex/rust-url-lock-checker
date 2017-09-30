@@ -3,7 +3,7 @@ extern crate urllockcheck;
 use urllockcheck::UrlLockChecker;
 
 #[test]
-fn test1() {
+fn test_source() {
 	let check = UrlLockChecker::new("rutracker.org");
 	match check.get_details() {
            Ok(dt) => assert_eq!("http://antizapret.info".to_string(), dt.source),
@@ -12,7 +12,7 @@ fn test1() {
 }
 
 #[test]
-fn test2() {
+fn test_register_len() {
 	let check = UrlLockChecker::new("rutracker.org");
 	let reg = match check.get_details() {
            Ok(dt) => dt.register,

@@ -6,6 +6,8 @@ use serde::{Deserialize};
 use std::str;
 use std::str::FromStr;
 
+use chrono::{DateTime, Utc};
+
 use models::*;
 
 pub struct UrlLockChecker {
@@ -88,6 +90,34 @@ impl UrlLockChecker {
 	pub fn get_details(&self) -> ApiResult<DetailInfo> {
         let full_url = self.build_url(TypeResponse::Json);
         self.get_json(&full_url)
+	}
+
+	pub fn get_ip_addresses(&self) -> ApiResult<Vec<String>> {
+		let mut result: Vec<String> = Vec::new();
+		
+		match self.get_details() {
+			Ok(details) => {
+				if let Some(regs) = details.register {
+				
+					for reg in regs.iter() {
+						let v: Vec<&str> = reg.ip.split(',').collect();
+						for el in v.iter() {
+							result.push(el.to_string());
+						}
+					}
+				}
+				Ok(result)
+			},
+			Err(e) => Err(e),
+		}		
+	}
+
+	pub fn get_update_date(&self) -> ApiResult<DateTime<Utc>> {
+		
+		match self.get_details() {
+			Ok(details) => Ok(details.update_time),
+			Err(e) => Err(e),
+		}		
 	}
 
     /// Returns raw data in bytes from specified url
