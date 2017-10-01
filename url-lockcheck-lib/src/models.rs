@@ -44,6 +44,24 @@ pub struct DetailInfo {
 
 }
 
+impl DetailInfo {
+    
+    pub fn get_ip_addresses(&self) -> Vec<String> {
+		let mut result: Vec<String> = Vec::new();
+		if let Some(ref regs) = self.register {
+            for reg in regs.iter() {
+                let v: Vec<&str> = reg.ip.split(',').collect();
+                for el in v.iter() {
+                    result.push(el.to_string());
+                }
+            }
+		}
+
+        result
+	}
+
+}
+
 mod mysql_date_format {
     use chrono::{DateTime, Utc, TimeZone};
     use serde::{self, Deserialize, Serializer, Deserializer};

@@ -2,7 +2,8 @@
 extern crate clap;
 extern crate urllockcheck;
 
-use urllockcheck::UrlLockChecker;
+use urllockcheck::{UrlLockChecker,DetailInfo};
+
 use clap::{Arg, App};
 
 fn check_url( s: &str ) {
@@ -13,22 +14,25 @@ fn check_url( s: &str ) {
     }
 }
 
+fn print_ip_addresses(dt: DetailInfo) {
+    let result = dt.get_ip_addresses();
+    for el in result.iter() {
+        println!("{}", el);
+    }
+}
+
 fn print_block_ip( s: &str ) {
 	let checker = UrlLockChecker::new(s);
-	match checker.get_ip_addresses() {
-		Ok(result) => {
-            for el in result.iter() {
-                println!("{}", el);
-            }
-        },
+    match checker.get_details() {
+        Ok(dt) => print_ip_addresses(dt),
         Err(e) => println!("Error: {:?}", e),
-    }
+    }	
 }
 
 fn print_update_date( s: &str ) {
 	let checker = UrlLockChecker::new(s);
-	match checker.get_update_date() {
-		Ok(result) => println!("{}", result.to_string()),
+	match checker.get_details() {
+		Ok(dt) => println!("{}", dt.update_time.to_string()),
         Err(e) => println!("Error: {:?}", e),
     }
 }
