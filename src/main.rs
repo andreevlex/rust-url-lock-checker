@@ -31,7 +31,6 @@ fn print_block_ip( s: &str ) {
 
 fn print_urls(dt: DetailInfo) {
     let result = dt.get_urls();
-    println!("{:?}", result);
     for el in result.iter() {
         println!("{}", el);
     }
