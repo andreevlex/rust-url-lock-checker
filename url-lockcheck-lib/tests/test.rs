@@ -2,7 +2,6 @@ extern crate urllockcheck;
 
 use urllockcheck::UrlLockChecker;
 
-#[test]
 fn test1() {
 	let check = UrlLockChecker::new("rutracker.org");
 	match check.get_details() {
@@ -11,7 +10,6 @@ fn test1() {
            }
 }
 
-#[test]
 fn test2() {
 	let check = UrlLockChecker::new("rutracker.org");
 	let reg = match check.get_details() {
