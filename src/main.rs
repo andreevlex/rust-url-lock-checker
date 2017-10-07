@@ -26,7 +26,7 @@ fn print_block_ip( s: &str ) {
     match checker.get_details() {
         Ok(dt) => print_ip_addresses(dt),
         Err(e) => println!("Error: {:?}", e),
-    }	
+    }
 }
 
 fn print_update_date( s: &str ) {
