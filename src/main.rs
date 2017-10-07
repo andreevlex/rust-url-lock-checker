@@ -29,6 +29,22 @@ fn print_block_ip( s: &str ) {
     }
 }
 
+fn print_urls(dt: DetailInfo) {
+    let result = dt.get_urls();
+    println!("{:?}", result);
+    for el in result.iter() {
+        println!("{}", el);
+    }
+}
+
+fn print_block_urls( s: &str ) {
+	let checker = UrlLockChecker::new(s);
+    match checker.get_details() {
+        Ok(dt) => print_urls(dt),
+        Err(e) => println!("Error: {:?}", e),
+    }
+}
+
 fn print_update_date( s: &str ) {
 	let checker = UrlLockChecker::new(s);
 	match checker.get_details() {
@@ -48,9 +64,9 @@ fn main() {
                 .help("проверить сайт по доменному имени или ip адресу")
                 .takes_value(true)
                 .value_name("DOMAIN_NAME"))
-        .arg(Arg::with_name("print_ip")
+        .arg(Arg::with_name("print-ip")
                 .short("p")
-                .long("print_ip")
+                .long("print-ip")
                 .help("получить список заблокированных ip адресов по доменному имени")
                 .takes_value(true)
                 .value_name("DOMAIN_NAME"))
@@ -60,15 +76,24 @@ fn main() {
                 .help("показать дату обновления данных по доменному имени")
                 .takes_value(true)
                 .value_name("DOMAIN_NAME"))
+        .arg(Arg::with_name("print-url")
+                .short("u")
+                .long("print-url")
+                .help("получить список заблокированных url адресов по доменному имени")
+                .takes_value(true)
+                .value_name("DOMAIN_NAME"))
         .get_matches();
     if let Some(url) = app_m.value_of("check") {
         check_url(&url);
     }
-    else if let Some(url) = app_m.value_of("print_ip") {
+    else if let Some(url) = app_m.value_of("print-ip") {
         print_block_ip(&url);
     }
     else if let Some(url) = app_m.value_of("update-date") {
         print_update_date(&url);
+    }
+    else if let Some(url) = app_m.value_of("print-url") {
+        print_block_urls(&url);
     }
     else {
         println!("{}", "Используйте ключ -h для получения справки");

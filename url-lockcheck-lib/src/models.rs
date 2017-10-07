@@ -59,6 +59,17 @@ impl DetailInfo {
         result
 	}
 
+    pub fn get_urls(&self) -> Vec<String> {
+		let mut result: Vec<String> = Vec::new();
+		if let Some(ref regs) = self.register {
+            for reg in regs.iter() {
+                result.extend_from_slice(&reg.url);
+            }
+		}
+
+        result
+	}
+
 }
 
 mod mysql_date_format {
