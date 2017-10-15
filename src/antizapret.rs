@@ -6,8 +6,6 @@ use serde::{Deserialize};
 use std::str;
 use std::str::FromStr;
 
-use chrono::{DateTime, Utc};
-
 use models::*;
 
 pub struct UrlLockChecker {
@@ -45,14 +43,6 @@ impl UrlLockChecker {
 	}
 
     fn build_url(&self, tp: TypeResponse) -> String {
-        let mut request_str: String = String::new();
-		request_str.push_str(&self.base_url);
-		request_str.push_str("/get.php");
-		request_str.push_str("?");
-		request_str.push_str("item=");
-		request_str.push_str(&self.control_url);
-		request_str.push_str("&type=");
-
         let type_resp = match tp {
             TypeResponse::Small => "small",
             TypeResponse::Csv => "csv",
@@ -60,7 +50,7 @@ impl UrlLockChecker {
             TypeResponse::Json => "json",
         };
 
-        request_str.push_str(type_resp);
+        let request_str = format!("{}/get.php?item={}&type={}", self.base_url, self.control_url, type_resp);
 
         request_str
     }
